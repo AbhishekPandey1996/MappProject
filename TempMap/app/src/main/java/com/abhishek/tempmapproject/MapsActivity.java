@@ -6,6 +6,7 @@ import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.provider.SyncStateContract;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,6 +44,8 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
         b = (Button) findViewById(R.id.button2);
         b.setOnClickListener(this);
 
+        /****** To add NavigATION dRAWER ******/
+
        /* MainActivity fr = new MainActivity();
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -50,7 +53,12 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
         ft.commit();*/
         if (mMap != null) {
             mMap.setMyLocationEnabled(true);
+        }else {
+            Toast.makeText(this,"mMap Null",Toast.LENGTH_SHORT).show();
         }
+
+
+   // mAP sETTINGS
        UiSettings mapSettings;
         mapSettings = mMap.getUiSettings();
         mapSettings.setZoomControlsEnabled(true);
@@ -59,24 +67,6 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
       mapSettings.setRotateGesturesEnabled(true);
       mapSettings.setMyLocationButtonEnabled(true);
 
-
-        // List<Address> geocodeMatches = null;
-
-       /* try {
-            geocodeMatches =
-                    new Geocoder(MapsActivity.this).getFromLocationName(
-                            "Varanasi,India", 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d("Checking", e.toString());
-        }
-
-        if (!geocodeMatches.isEmpty())
-        {
-            latitude = geocodeMatches.get(0).getLatitude();
-            longitude = geocodeMatches.get(0).getLongitude();
-        }
-*/
     }
 
     @Override
@@ -130,55 +120,35 @@ public class MapsActivity extends FragmentActivity implements View.OnClickListen
 
     private void setUpMap() {
 
-       /*load.start();
-        if(latitude != 0) {
-            CameraPosition cam = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(1).build();
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cam));
-            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("Marker"));
-        }
-        else {
-            CameraPosition cam = new CameraPosition.Builder().target(new LatLng(20.3845, 75.457 )).zoom(1).build();
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cam));
-            mMap.addMarker(new MarkerOptions().position(new LatLng(20.3845, 75.457)).title("Marker"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").snippet("Snippet"));
 
-        }
-        /**  mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.setMyLocationEnabled(true);
 
-         try {
-         Thread.sleep(5000);
-         } catch (InterruptedException e) {
-         e.printStackTrace();
-         Log.d("Checking",e.toString());
-         }
-         Toast.makeText(this,"Going to Current Location",Toast.LENGTH_SHORT);
-         getLocation();
-         **/
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        Criteria criteria = new Criteria();
+
+        String provider = locationManager.getBestProvider(criteria, true);
+
+        Location myLocation = locationManager.getLastKnownLocation(provider);
+
+
+        double latitude = myLocation.getLatitude();
+
+        double longitude = myLocation.getLongitude();
+
+        // Create a LatLng object for the current location
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("Consider yourself located"));
+
+
     }
 
-    public Thread load = new Thread() {
-
-        public void run() {
-
-
-            /*locm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Criteria cri = new Criteria();
-
-            provider = locm.getBestProvider(cri, false);
-            Location loc = locm.getLastKnownLocation(provider);
-            if (loc != null) {
-                latitu = (int) (loc.getLatitude() * 1E6);
-                longitu = (int) (loc.getLongitude() * 1E6);
-                Log.d("Location", latitu + " is latitude " + longitu + " is longitude");
-
-*/
-
-           // mMap.setMyLocationEnabled(true);
-            }
-
-
-
-        };
-
+   
 
 
 }
