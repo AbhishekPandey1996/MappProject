@@ -3,5 +3,13 @@
 
     <string name="app_name">TempMap</string>
     <string name="title_activity_maps">Map</string>
+    <string-array name="itemslist">
+        <item>Normal View</item>
+        <item>Satellite View</item>
+        <item>Hybrid View</item>
+        <item>Terrain View</item>
+        <item>None</item>
+        <item>About Us</item>
+    </string-array>
 
 </resources>

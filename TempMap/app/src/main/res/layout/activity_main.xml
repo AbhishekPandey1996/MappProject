@@ -1,11 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navdrawerlayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button" />
-</LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/framelayout">
+    </FrameLayout>
+    <ListView
+        android:layout_width="240dp"
+        android:background="#ffbb00"
+        android:divider="@null"
+        android:id="@+id/drawerlist"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"></ListView>
+
+
+</android.support.v4.widget.DrawerLayout>
